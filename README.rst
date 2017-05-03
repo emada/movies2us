@@ -3,6 +3,33 @@ Movies2Us
 
 A blend of ThePirateBay and IMDb. Just for fun! :)
 
+Most of the information I used to get docker running I found in https://realpython.com/blog/python/development-and-deployment-of-cookiecutter-django-via-docker/
+
+By the way, I was having an ALLOWED_HOSTS error. Three things I did to make it work.
+
+1. Add the following environment variable to dev.yml file.
+::
+  django:
+    environment:
+      - DJANGO_READ_DOT_ENV_FILE=${DJANGO_READ_DOT_ENV_FILE}
+2. Create a .env file containing
+::
+  # General settings
+  DJANGO_READ_DOT_ENV_FILE=True
+  DJANGO_ALLOWED_HOSTS=192.168.99.100
+3. Moved the section
+::
+  # SITE CONFIGURATION
+  # ------------------------------------------------------------------------------
+  # Hosts/domain names that are valid for this site
+  # See https://docs.djangoproject.com/en/dev/ref/settings/#allowed-hosts
+  ALLOWED_HOSTS = env.list('DJANGO_ALLOWED_HOSTS', default=['movies2us', ])
+  # END SITE CONFIGURATION
+
+  from: config/settings/base.py 
+  to:   config/settings/production.py
+
+
 .. image:: https://img.shields.io/badge/built%20with-Cookiecutter%20Django-ff69b4.svg
      :target: https://github.com/pydanny/cookiecutter-django/
      :alt: Built with Cookiecutter Django

@@ -23,6 +23,7 @@ services:
     environment:
       - POSTGRES_USER=movies2us
       - USE_DOCKER=yes
+      - DJANGO_READ_DOT_ENV_FILE=${DJANGO_READ_DOT_ENV_FILE}
     volumes:
       - .:/app
     ports:
